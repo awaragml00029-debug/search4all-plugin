@@ -1,0 +1,13 @@
+{
+  "name": "issushow",
+  "owner": {
+    "name": "issushow"
+  },
+  "plugins": [
+    {
+      "name": "search4all",
+      "source": "./search4all",
+      "description": "把实验室生信知识库接进 Claude Code：遇到基因/通路/分析流程问题时直接检索内部库并带回来源。"
+    }
+  ]
+}

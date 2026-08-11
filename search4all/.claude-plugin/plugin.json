@@ -1,0 +1,30 @@
+{
+  "name": "search4all",
+  "version": "0.1.2",
+  "description": "把实验室生信知识库接进 Claude Code：遇到基因/通路/分析流程问题时直接检索内部库并带回来源，不必再手工搜索。",
+  "author": {
+    "name": "issushow"
+  },
+  "keywords": [
+    "bioinformatics",
+    "rag",
+    "knowledge-base",
+    "search"
+  ],
+  "userConfig": {
+    "server_url": {
+      "type": "string",
+      "title": "服务地址",
+      "description": "search4all 网关地址，例如 http://10.0.0.5:8800（问管理员要）",
+      "required": true,
+      "default": "http://localhost:8800"
+    },
+    "api_key": {
+      "type": "string",
+      "title": "API Key",
+      "description": "登录搜索页 → 右上角「🔐 API Key」→ 生成，s4a_ 开头。与网页登录分开，重新登录不会让它失效。",
+      "required": true,
+      "sensitive": true
+    }
+  }
+}
