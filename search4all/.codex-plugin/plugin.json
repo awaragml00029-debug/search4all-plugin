@@ -1,0 +1,20 @@
+{
+  "name": "search4all",
+  "version": "2.2.0",
+  "description": "把实验室生信知识库接进 Codex：遇到基因/通路/分析流程问题时直接检索内部库并带回来源。远端 MCP 服务，本机不装任何东西。",
+  "author": {
+    "name": "issushow"
+  },
+  "keywords": [
+    "bioinformatics",
+    "rag",
+    "knowledge-base",
+    "search"
+  ],
+  "mcpServers": {
+    "search4all": {
+      "url": "https://search.092420.xyz/mcp",
+      "bearer_token_env_var": "SEARCH4ALL_API_KEY"
+    }
+  }
+}

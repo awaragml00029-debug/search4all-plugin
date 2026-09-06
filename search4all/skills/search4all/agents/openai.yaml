@@ -1,0 +1,18 @@
+# Codex 专有的 skill 元数据（Claude Code 会忽略这个文件）。
+# 官方文档：https://developers.openai.com/codex/skills →「Optional metadata」
+interface:
+  display_name: "search4all 知识库"
+  short_description: "检索实验室内部生信知识库，带来源返回"
+
+policy:
+  # 默认就是 true，这里写出来是表明立场：这个 skill 应该由模型按 description
+  # 自动触发，而不是等用户敲 $search4all —— 用户往往不知道有这个库。
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "search4all"
+      description: "search4all 知识库 MCP 服务（远端 streamable HTTP）"
+      transport: "streamable_http"
+      url: "https://search.092420.xyz/mcp"

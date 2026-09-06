@@ -1,13 +1,10 @@
 {
   "mcpServers": {
     "search4all": {
-      "command": "python3",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/server.py"
-      ],
-      "env": {
-        "SEARCH4ALL_URL": "${user_config.server_url}",
-        "SEARCH4ALL_API_KEY": "${user_config.api_key}"
+      "type": "http",
+      "url": "${user_config.server_url}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${user_config.api_key}"
       }
     }
   }

@@ -1,7 +1,7 @@
 {
   "name": "search4all",
-  "version": "0.1.2",
-  "description": "把实验室生信知识库接进 Claude Code：遇到基因/通路/分析流程问题时直接检索内部库并带回来源，不必再手工搜索。",
+  "version": "2.2.0",
+  "description": "把实验室生信知识库接进 AI 编码助手：遇到基因/通路/分析流程问题时直接检索内部库并带回来源。远端 MCP 服务，本机不装任何东西。",
   "author": {
     "name": "issushow"
   },
@@ -15,9 +15,9 @@
     "server_url": {
       "type": "string",
       "title": "服务地址",
-      "description": "search4all 网关地址，例如 http://10.0.0.5:8800（问管理员要）",
+      "description": "search4all 服务地址，例如 https://search.092420.xyz（问管理员要）。不要在末尾加 /mcp。",
       "required": true,
-      "default": "http://localhost:8800"
+      "default": "https://search.092420.xyz"
     },
     "api_key": {
       "type": "string",
