@@ -6,8 +6,21 @@ description: 把 search4all 账号下的 skill 同步到本机，让它们像本
 # 同步 search4all 上的 skill 到本机
 
 用户的 skill 存在 search4all 账号里（跨机器、跨客户端）。同步下来之后，它们会被
-Codex / Claude Code 按**各自原生的渐进式加载**发现——常驻上下文里只有名字和描述，
-真用到才读全文。所以同步是一次性动作，之后不花任何上下文。
+Codex / Claude Code / Gemini CLI / OpenCode 按**各自原生的渐进式加载**发现——
+常驻上下文里只有名字和描述，真用到才读全文。所以同步是一次性动作，之后不花任何上下文。
+
+## 架构：一份源，多端软链
+
+```
+~/.search4all/skills/<id>/     ← 唯一的源（SKILL.md + references/ scripts/ … 全在）
+        ↓ 软链（建不了就自动复制）
+~/.agents/skills/<id>          Codex
+~/.claude/skills/<id>          Claude Code
+~/.gemini/skills/<id>          Gemini CLI
+~/.config/opencode/skills/<id> OpenCode
+```
+
+所以**启用/禁用只是增删一条链，不用重新下载**；也和用户自己手写的 skill 天然隔开。
 
 ## 怎么做
 
@@ -29,7 +42,7 @@ python3 .../scripts/sync.py --dry-run
 | 参数 | 用途 |
 |---|---|
 | `--dry-run` | 只报告不落盘 |
-| `--dest <目录>` | 指定目标 skill 目录（可重复）。不传会自动探测 Codex / Claude Code |
+| `--client <路径>` | 指定目标客户端目录（可重复）。不传会自动探测四家 |
 | `--limit N` | 最多同步几个，默认 30 |
 | `--url` / `--key` | 服务地址和凭据，一般不用传 |
 
@@ -58,12 +71,15 @@ skill 清单是会话启动时构建的，同步完当前这个会话里看不�
 
 ## 几条边界
 
-- 脚本**只写 SKILL.md 正文，不写 `scripts/`**。远端 skill 是别人写的指令，
-  顺带往用户机器上落可执行脚本是另一个量级的风险。
-- 脚本**只删自己管过的**（记录在目标目录的 `.search4all-sync.json` 里）。
+- **只删自己管过的**（记录在 `~/.search4all/skills-manifest.json`）。
   用户手写的 skill 目录不在清单里，不会被动。
-- 同步有数量上限（默认 30）。客户端的常驻 skill 清单有硬预算（Codex 是上下文的 2%
-  或 8000 字符），塞太多会被静默丢弃。**装不下的不要硬同步**，让 `find_skill` 兜底。
+- **移除前先备份**到 `~/.search4all/skill-backups/<id>-<时间戳>/`，不做自动轮转删除。
+  用户后悔了可以从那里捞回来。
+- **随附文件会一起落盘**（`references/` `scripts/` `mcp-server/` 等）。也就是说
+  远端 skill 里的脚本会出现在用户机器上——这是产品的既定取舍，但值得在
+  用户第一次同步别人写的 skill 时提一句。
+- 同步有数量上限（默认 30）。客户端的常驻 skill 清单有预算，塞太多会被静默丢弃。
+  **装不下的不要硬同步**，让 `find_skill` 兜底。
 
 ## 不需要同步的情况
 

@@ -67,6 +67,24 @@ bearer_token_env_var: SEARCH4ALL_API_KEY
 两个 skill：`search4all`（什么时候该查库、怎么追问、怎么翻记忆）和
 `search4all-sync`（把账号里的 skill 同步到本机，让客户端原生加载）。
 
+## 可选：给单个工具的输出定 token 预算
+
+`get_entity` 会返回整页 wiki（实测单页近万字符），`search_library` 也可能比较长。
+想给它们上个硬预算，在 `~/.codex/config.toml` 里加：
+
+```toml
+[mcp_servers.search4all.tools.get_entity]
+output_token_limit = 6000
+
+[mcp_servers.search4all.tools.search_library]
+output_token_limit = 4000
+```
+
+⚠️ **这一项只能你自己在 config.toml 里配，插件清单带不过去**——
+实测把 `tools.<工具>.output_token_limit` 写进 `.codex-plugin/plugin.json` 的
+`mcpServers` 里，Codex 会**静默丢弃**（`codex mcp list --json` 里根本没有这个字段）。
+所以我们没在插件里预置，免得看着像生效其实没有。
+
 ## 不装插件、只要工具
 
 如果你只想要检索工具、不想要 skill 指导层：
