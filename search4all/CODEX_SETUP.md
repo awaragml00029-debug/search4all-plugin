@@ -61,7 +61,6 @@ bearer_token_env_var: SEARCH4ALL_API_KEY
 | `search_library` | 检索知识库，返回答案 + 编号来源。连续提问自动接成追问 |
 | `list_libraries` | 列出当前 key 能看到的库 |
 | `get_entity` | 读知识 Wiki 里某实体的完整研究页 |
-| `memory_recent` / `memory_search` / `memory_thread` | 调取本账号跨机器的历史对话 |
 | `list_skills` / `get_skill` / `find_skill` | 账号下的 skill（网站「Skill」板块管理） |
 
 两个 skill：`search4all`（什么时候该查库、怎么追问、怎么翻记忆）和
